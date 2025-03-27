@@ -4,15 +4,15 @@ export const PRICE_MAX = 2000;
 export const initialState = {
   category: "",
   price: {
-		min: 0,
-		max: 2000,
-	},
-	brand: "",
-	rate: "", // 1..5
+    min: "",
+    max: "",
+  },
+  brand: "",
+  rate: "", // 1..5
 }
 
-export const filterReducer = (state ,action) => {
-  switch(action.type){
+export const filterReducer = (state, action) => {
+  switch (action.type) {
     case "SET_CATEGORY":
       return {
         ...state,
@@ -33,6 +33,8 @@ export const filterReducer = (state ,action) => {
         ...state,
         rate: action.payload,
       }
+    case "CLEAN":
+      return initialState
     default:
       return state;
   }
