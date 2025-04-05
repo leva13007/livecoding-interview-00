@@ -33,29 +33,13 @@ const brands = [
   "Xiaomi"
 ]
 
-const initReducerHandler = () => {
-  const params = new URLSearchParams(window.location.search);
-  return {
-    category: params.get("category") || "",
-    price: {
-      min: params.get("price_min") || "",
-      max: params.get("price_max") || "",
-    },
-    brand: params.get("brand") || "",
-    rate: params.get("rate") || "", // 1..5
-  }
-}
-
 export const FilterProducts = memo(({
-  fetchProducts,
+  filters,
+  dispatch,
+  reset,
 }) => {
-  const [filters, dispatch] = useReducer(filterReducer, null, initReducerHandler);
-  console.log("FilterProducts", filters)
 
-  useEffect(() => {
-    console.log("filters", filters)
-    fetchProducts(filters);
-  }, [filters]);
+  console.log("FilterProducts", filters)
 
   const minPrice = Math.max(filters.price.min, PRICE_MIN);
   const maxPrice = Math.min(filters.price.max, PRICE_MAX);
@@ -148,9 +132,7 @@ export const FilterProducts = memo(({
           }
         </div>
         <div>
-          <button onClick={() => dispatch({
-            type: "CLEAN"
-          })}>Clear filters</button>
+          <button onClick={reset}>Clear filters</button>
         </div>
       </div>
     </div>
